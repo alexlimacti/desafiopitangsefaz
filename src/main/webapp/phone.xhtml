@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+</h:head>
+
+<h:body>
+
+	<h:form>
+		<p:breadCrumb>
+			<p:menuitem />
+			<p:menuitem value="Página JSF" action="index.jsf" />
+			<p:menuitem value="Página PrimeFaces" action="primefaces.jsf" />
+		</p:breadCrumb>
+	</h:form>
+
+	<h:form id="formulario">
+		<h:messages showDetail="true" showSummary="false" id="msg" />
+
+		<h:panelGrid columns="2">
+
+			<h:outputLabel>Usuario: </h:outputLabel>
+			<h:outputText value="#{phoneManagedBean.user.name}" />
+
+			<h:outputLabel>DDD:</h:outputLabel>
+			<h:inputText value="#{phoneManagedBean.phone.ddd}" />
+
+			<h:outputLabel>Número:</h:outputLabel>
+			<h:inputText value="#{phoneManagedBean.phone.number}" />
+
+			<h:outputLabel>Tipo:</h:outputLabel>
+			<h:inputText value="#{phoneManagedBean.phone.type}" />
+
+		</h:panelGrid>
+		<br />
+		<br />
+
+		<h:commandButton value="Salvar" action="#{phoneManagedBean.save}"></h:commandButton>
+
+	</h:form>
+
+	<h:form id="formTelefones">
+		<h:dataTable value="#{phoneManagedBean.user.phones}"
+			var="fone" cellpadding="15" border="1" id="tabelFone">
+
+			<f:facet name="header">Lista de phones</f:facet>
+
+			<h:column style="width:150px;">
+				<f:facet name="header">Id</f:facet>
+				<h:outputText value="#{fone.id}" />
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Número</f:facet>
+				<h:outputText value="#{fone.number}" />
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Tipo</f:facet>
+				<h:outputText value="#{fone.type}" />
+			</h:column>
+			
+			
+			
+				<h:column>
+				<f:facet name="header">Delete</f:facet>
+				<h:commandLink immediate="true"
+					action="#{phoneManagedBean.deletePhone}" id="botaoremover">
+					<h:graphicImage url="resources/img/delete_97403.jpg" width="25" height="25"/>
+					<f:setPropertyActionListener value="#{fone}"
+						target="#{phoneManagedBean.phone}" />
+						<f:ajax execute="botaoremover" render="@form :formulario:msg" />	
+				</h:commandLink>
+			</h:column>
+
+		</h:dataTable>
+	</h:form>
+
+</h:body>
+
+</html>

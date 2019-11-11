@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact name="sefaz">
+    <output-path>$PROJECT_DIR$/out/artifacts/sefaz</output-path>
+    <root id="root" />
+  </artifact>
+</component>

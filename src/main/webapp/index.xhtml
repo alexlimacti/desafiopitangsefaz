@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+</h:head>
+
+<h:body>
+
+	<h:form>
+
+		<p:breadCrumb>
+			<p:menuitem />
+			<p:menuitem value="Página JSF" action="index.jsf" />
+			<p:menuitem value="Página PrimeFaces" action="primefaces.jsf" />
+		</p:breadCrumb>
+	</h:form>
+
+	<h:form id="formulario">
+		<h:messages showDetail="true" showSummary="false" id="msg" />
+		<h:panelGrid columns="2">
+			<h:outputLabel>Id:</h:outputLabel>
+			<h:inputText readonly="true"
+				value="#{userManagedBean.user.id}" />
+
+			<h:outputLabel>Nome:</h:outputLabel>
+			<h:inputText value="#{userManagedBean.user.name}" pt:placeholder="Informe o nome da pessoa"
+				required="true" requiredMessage="Informe o nome!" />
+
+			<h:outputLabel>Email:</h:outputLabel>
+			<h:inputText value="#{userManagedBean.user.mail}" />
+
+			<h:outputLabel>Senha:</h:outputLabel>
+			<h:inputSecret
+				value="#{userManagedBean.user.password}" />
+		</h:panelGrid>
+		<br />
+		<br />
+		<h:commandButton value="Salvar"
+			action="#{userManagedBean.save}" />
+		<h:commandButton value="Novo"
+			action="#{userManagedBean.newUser}" />
+
+		<br />
+		<br />
+	</h:form>
+
+	<h:form id="formTable">
+		<h:dataTable value="#{userManagedBean.list}" var="user"
+			cellpadding="15" border="1">
+			<f:facet name="header">Lista de usuários</f:facet>
+			<h:column style="width:150px;">
+				<f:facet name="header">Id</f:facet>
+				<h:outputText value="#{user.id}" />
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Nome</f:facet>
+				<h:outputText value="#{user.name}" />
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Email</f:facet>
+				<h:outputText value="#{user.mail}" />
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Editar</f:facet>
+				<h:commandLink immediate="true" id="botaoeditar">
+					<h:graphicImage url="resources/img/editar.png" width="25"
+									height="25" />
+					<f:setPropertyActionListener value="#{user}"
+						target="#{userManagedBean.user}" />
+					<f:ajax execute="botaoeditar" render=":formulario" />
+				</h:commandLink>
+			</h:column>
+
+
+			<h:column>
+				<f:facet name="header">Delete</f:facet>
+				<h:commandLink immediate="true"
+					action="#{userManagedBean.remover}" id="botaoremover">
+					<h:graphicImage url="resources/img/delete_97403.jpg" width="25"
+									height="25" />
+					<f:setPropertyActionListener value="#{user}"
+						target="#{userManagedBean.user}" />
+					<f:ajax execute="botaoremover" render="@form :formulario:msg" />
+				</h:commandLink>
+			</h:column>
+
+
+			<h:column>
+				<f:facet name="header">Telefones</f:facet>
+				<h:commandLink immediate="true" action="phone.jsf" id="botaofone">
+					<h:graphicImage url="resources/img/phone.png" width="25"
+									height="25" />
+					<f:param name="codigouser" value="#{user.id}" />
+				</h:commandLink>
+			</h:column>
+
+
+		</h:dataTable>
+	</h:form>
+
+</h:body>
+
+</html>
